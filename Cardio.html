@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Sémiologie Cardio-vasculaire</title>
+    <style>
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <div id="quiz"></div>
+    <button onclick="checkAnswers()">Vérifier les réponses</button>
+
+    <script>
+        const questions = [
+            {
+                question: "Quel est le principal symptôme de l'angine de poitrine?",
+                answers: ["Douleur thoracique", "Dyspnée", "Palpitations", "Syncope"],
+                correct: 0
+            },
+            {
+                question: "Quelle est la méthode principale pour diagnostiquer une insuffisance cardiaque?",
+                answers: ["ECG", "Echocardiographie", "Radiographie thoracique", "IRM"],
+                correct: 1
+            },
+            {
+                question: "Quel est le signe clinique caractéristique de la péricardite aiguë?",
+                answers: ["Douleur thoracique", "Fièvre", "Dyspnée", "Frottement péricardique"],
+                correct: 3
+            },
+            // Ajoutez ici les 27 autres questions
+        ];
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `<p>${q.question}</p>`;
+                q.answers.forEach((answer, i) => {
+                    questionDiv.innerHTML += `
+                        <label>
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${answer}
+                        </label><br>
+                    `;
+                });
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswers() {
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                if (selected) {
+                    const answerIndex = parseInt(selected.value);
+                    if (answerIndex === q.correct) {
+                        selected.parentElement.classList.add('correct');
+                    } else {
+                        selected.parentElement.classList.add('incorrect');
+                    }
+                }
+            });
+        }
+
+        window.onload = loadQuiz;
+    </script>
+</body>
+</html>
